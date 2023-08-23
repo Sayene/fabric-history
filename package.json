@@ -1,7 +1,7 @@
 {
   "name": "fabric-history",
-  "version": "1.6.0",
-  "description": "Undo and redo implementations on fabric.js",
+  "version": "1.8.0",
+  "description": "Undo and redo implementations on fabric.js v6",
   "main": "src/index.min.js",
   "scripts": {
     "minify": "uglifyjs --compress --mangle -o src/index.min.js -- src/index.js ",
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/lyzerk/fabric-history.git"
   },
   "dependencies": {
-    "fabric": "6.0.0-beta5"
+    "fabric": "6.0.0-beta12"
   },
   "keywords": [
     "fabric",

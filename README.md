@@ -1,14 +1,15 @@
-# fabric-history
+# fabric-history (v6 update)
 
 [![npm](https://img.shields.io/npm/v/fabric-history)](https://www.npmjs.com/package/fabric-history) ![npm](https://img.shields.io/npm/dw/fabric-history)
 
-Fabric.js history implementation
+Fabric.js history implementation, forked from https://github.com/maxigator/fabric-history
+
 
 # Setup
 
 ## Node projects
 ```bash
-npm i git+https://github.com/maxigator/fabric-history.git
+npm i git+https://github.com/Sayene/fabric-history.git
 ```
 
 ```javascript
@@ -18,7 +19,7 @@ import 'fabric-history';
 ## HTML
 
 ```html
-<script src="https://raw.githubusercontent.com/maxigator/fabric-history/master/src/index.min.js"></script>
+<script src="https://raw.githubusercontent.com/Sayene/fabric-history/master/src/index.min.js"></script>
 ```
 
 # Usage
@@ -42,8 +43,8 @@ canvas.redo();
 </head>
 <body>
   <canvas style="border:1px solid black;" width="800" height="400"></canvas>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/6.0.0-beta5/fabric.min.js"></script>
-  <script src="https://raw.githubusercontent.com/maxigator/fabric-history/master/src/index.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/6.0.0-beta12/fabric.min.js"></script>
+  <script src="https://raw.githubusercontent.com/Sayene/fabric-history/master/src/index.min.js"></script>
 
   <script>
     const canvas = new fabric.Canvas(document.querySelector('canvas'), {
@@ -84,7 +85,7 @@ You can find an advanced example on demo folder.
 - history:clear
   - Fired when whole history cleared
 
-# Callbacks
+# Async / promises
 
 
 ```javascript

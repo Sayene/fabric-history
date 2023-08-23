@@ -1,33 +1,37 @@
 import * as fabric from "fabric";
+
+import {Canvas as FabricCanvas} from "fabric";
+
+
 /**
  * Override the initialize function for the _historyInit();
  */
-fabric.Canvas.prototype.historyInit = function () {
+FabricCanvas.prototype.historyInit = function () {
   this._historyInit();
 };
 
 /**
  * Override the dispose function for the _historyDispose();
  */
-fabric.Canvas.prototype.dispose = (function (originalFn) {
+FabricCanvas.prototype.dispose = (function (originalFn) {
   return function (...args) {
     originalFn.call(this, ...args);
     this._historyDispose();
     return this;
   };
-})(fabric.Canvas.prototype.dispose);
+})(FabricCanvas.prototype.dispose);
 
 /**
  * Returns current state of the string of the canvas
  */
-fabric.Canvas.prototype._historyNext = function () {
+FabricCanvas.prototype._historyNext = function () {
   return JSON.stringify(this.toDatalessObject(this.extraProps));
 };
 
 /**
  * Returns an object with fabricjs event mappings
  */
-fabric.Canvas.prototype._historyEvents = function () {
+FabricCanvas.prototype._historyEvents = function () {
   return {
     "object:added": this._historySaveAction,
     "object:removed": this._historySaveAction,
@@ -39,7 +43,7 @@ fabric.Canvas.prototype._historyEvents = function () {
 /**
  * Initialization of the plugin
  */
-fabric.Canvas.prototype._historyInit = function () {
+FabricCanvas.prototype._historyInit = function () {
   this.historyUndo = [];
   this.historyRedo = [];
   this.extraProps = ["selectable", "editable"];
@@ -51,14 +55,14 @@ fabric.Canvas.prototype._historyInit = function () {
 /**
  * Remove the custom event listeners
  */
-fabric.Canvas.prototype._historyDispose = function () {
+FabricCanvas.prototype._historyDispose = function () {
   this.off(this._historyEvents());
 };
 
 /**
  * It pushes the state of the canvas into history stack
  */
-fabric.Canvas.prototype._historySaveAction = function () {
+FabricCanvas.prototype._historySaveAction = function () {
   if (this.historyProcessing) return;
 
   const json = this.historyNextState;
@@ -73,7 +77,7 @@ fabric.Canvas.prototype._historySaveAction = function () {
  * Pop the latest state of the history. Re-render.
  * Also, pushes into redo history.
  */
-fabric.Canvas.prototype.undo = async function () {
+FabricCanvas.prototype.undo = async function () {
   // The undo process will render the new states of the objects
   // Therefore, object:added and object:modified events will triggered again
   // To ignore those events, we are setting a flag.
@@ -93,7 +97,7 @@ fabric.Canvas.prototype.undo = async function () {
 /**
  * Redo to latest undo history.
  */
-fabric.Canvas.prototype.redo = async function () {
+FabricCanvas.prototype.redo = async function () {
   // The undo process will render the new states of the objects
   // Therefore, object:added and object:modified events will triggered again
   // To ignore those events, we are setting a flag.
@@ -110,7 +114,7 @@ fabric.Canvas.prototype.redo = async function () {
   }
 };
 
-fabric.Canvas.prototype._loadHistory = async function (history, event) {
+FabricCanvas.prototype._loadHistory = async function (history, event) {
   var that = this;
 
   await this.loadFromJSON(history)
@@ -122,7 +126,7 @@ fabric.Canvas.prototype._loadHistory = async function (history, event) {
 /**
  * Clear undo and redo history stacks
  */
-fabric.Canvas.prototype.clearHistory = function () {
+FabricCanvas.prototype.clearHistory = function () {
   this.historyUndo = [];
   this.historyRedo = [];
   this.fire("history:clear");
@@ -131,14 +135,14 @@ fabric.Canvas.prototype.clearHistory = function () {
 /**
  * Off the history
  */
-fabric.Canvas.prototype.offHistory = function () {
+FabricCanvas.prototype.offHistory = function () {
   this.historyProcessing = true;
 };
 
 /**
  * On the history
  */
-fabric.Canvas.prototype.onHistory = function () {
+FabricCanvas.prototype.onHistory = function () {
   this.historyProcessing = false;
 
   this._historySaveAction();
